@@ -1,0 +1,25 @@
+{
+	"suibian":{
+		"supports":[
+			{
+				"title":"name1",
+				"id":"0"
+			},
+			{
+				"title":"name2",
+				"id":"1"
+			},
+			{
+				"title":"name3",
+				"id":"2"
+			}
+		]
+	},
+    "newsList":[
+        { "title":"头条大新闻-1","url":"http://starcraft.com',hot:true" },
+        { "title":"头条大新闻-2","url":"http://starcraft.com" },
+        { "title":"头条大新闻-3","url":"http://starcraft.com" },
+        { "title":"头条大新闻-4","url":"http://starcraft.com" },
+        { "title":"头条大新闻-5","url":"http://starcraft.com" }
+      ]
+}
