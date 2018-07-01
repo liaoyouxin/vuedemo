@@ -9,19 +9,26 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
-/*引入json-server*/
-const jsonServer = require('json-server')
-/*搭建一个server*/
-const apiServer = jsonServer.create()
-/*将db.json关联到server*/
-const apiRouter = jsonServer.router('db.json')
-const middlewares = jsonServer.defaults()
-apiServer.use(middlewares)
-apiServer.use(apiRouter)
-/*监听端口*/
-apiServer.listen(3000, () => {
-  console.log('JSON Server is running')
-})
+const express= require('express')
+// /*引入json-server*/
+// const jsonServer = require('json-server')
+// /*搭建一个server*/
+// const apiServer = jsonServer.create()
+// /*将db.json关联到server*/
+// const apiRouter = jsonServer.router('db.json')
+// const middlewares = jsonServer.defaults()
+// apiServer.use(middlewares)
+// apiServer.use(apiRouter)
+// /*监听端口*/
+// apiServer.listen(3000, () => {
+//   console.log('JSON Server is running')
+// })
+
+//创建一个express
+const app= express();
+const api = require('../routes/dogs.js')
+app.use('/api',api)
+app.listen(3000)
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -55,6 +62,20 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
+    },
+    before(app){
+      app.get('api/suibian',function(req,res){
+        res.json({
+          error:0,
+          data:suibian
+        })
+      });
+      app.get('api/newsList',function(req,res){
+        res.json({
+          error:0,
+          data:newslist
+        })
+      })
     }
   },
   plugins: [

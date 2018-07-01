@@ -5,11 +5,13 @@
           <img src="../assets/logo.png" alt="logo" class="app-head-logo">
           <div class="head-nav">
             <ul class="nav-list">
-              <li>登录</li>
+              <li v-if="loginStatus">{{ userName }} &nbsp;</li>
+              <li v-if="!loginStatus" @click="dialogShow('logDialogShow')">登录</li>
+              <li v-if="loginStatus" @click="logout">退出</li>
               <li class="nav-pile">|</li>
-              <li>注册</li>
+              <li @click="dialogShow('regDialogShow')">注册</li>
               <li class="nav-pile">|</li>
-              <li>关于</li>
+              <li @click="dialogShow('aboutDialogShow')">关于</li>
             </ul>
           </div>
       </div>
@@ -22,15 +24,52 @@
     <div class="app-foot">
       <p>© 2018 vueshop </p>
     </div>
+    <vue-dialog :is-show="aboutDialogShow" @on-close="dialogClose('aboutDialogShow')">
+      <p>about hello</p>
+    </vue-dialog>
+    <vue-dialog :is-show="logDialogShow" @on-close="dialogClose('logDialogShow')">
+      <log-form @has-login="showUser"></log-form>
+    </vue-dialog>
+    <vue-dialog :is-show="regDialogShow" @on-close="dialogClose('regDialogShow')">
+      <p>register hello</p>
+    </vue-dialog>
   </div>
 </template>
 
 <script>
+import VueDialog from './vueDialog'
+import LogForm from './logForm'
+
 export default {
   name: 'layout',
+  components:{
+    VueDialog,
+    LogForm
+  },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      aboutDialogShow:false,
+      logDialogShow:false,
+      regDialogShow:false,
+      userName:'',
+      loginStatus:false
+    }
+  },
+  methods:{
+    dialogShow(attr){
+      this[attr]=true
+    },
+    dialogClose(attr){
+      this[attr] = false
+    },
+    showUser(data){
+      this.dialogClose('logDialogShow')
+      this.loginStatus=true
+      this.userName = data.userName
+    },
+    logout(){
+      this.loginStatus = false
     }
   }
 }

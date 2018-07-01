@@ -21,5 +21,9 @@
         { "title":"头条大新闻-3","url":"http://starcraft.com" },
         { "title":"头条大新闻-4","url":"http://starcraft.com" },
         { "title":"头条大新闻-5","url":"http://starcraft.com" }
-      ]
+      ],
+    "login":{
+    	"userName":"lyx",
+    	"userId":"001"
+    }
 }

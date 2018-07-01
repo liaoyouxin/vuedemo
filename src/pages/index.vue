@@ -25,6 +25,7 @@
         </div>
     </div>
     <div class="index-right">
+       <slide-show :slides="slides" :inv="invTime" ></slide-show>
        <div class="index-board-list">
          <div class="index-board-item"
               v-for="(item,index) in boardList"
@@ -45,8 +46,13 @@
 </template>
 
 <script>
+import slideShow from '@/components/slide'
+
 export default {
   name: 'index',
+  components:{
+    slideShow
+  },
   created:function(){
     this.$http.get('/api/newsList')
     .then(function(res){
@@ -54,6 +60,11 @@ export default {
     },function(err){
       console.log(err)
     })
+  },
+  methods:{
+    doSomethingOnSlideChange(eventVal){
+      console.log('slide change'+ eventVal)
+    }
   },
   data () {
     return {
@@ -105,6 +116,29 @@ export default {
               saleout:false,
               id:'mounter'
             }
+      ],
+      invTime:2000,
+      slides:[
+        {
+           title:'一张图片',
+           src:require('../assets/slides/slide-1.jpg'),
+           href:'https://www.uc.com'
+        },
+         {
+           title:'一张图片',
+           src:require('../assets/slides/slide-2.jpg'),
+           href:'https://www.uc.com'
+        },
+         {
+           title:'一张图片',
+           src:require('../assets/slides/slide-3.jpg'),
+           href:'https://www.uc.com'
+        },
+         {
+           title:'一张图片',
+           src:require('../assets/slides/slide-4.jpg'),
+           href:'https://www.uc.com'
+        }
       ]
     }
   }
