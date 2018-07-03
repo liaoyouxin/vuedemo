@@ -7,25 +7,39 @@
 	    	<div class="buyNum">
 	    		<span class="label">购买数量 : </span>
 	    		<div class="select-div">
-	    			<vue-counter :max=20></vue-counter>
+	    			<vue-counter :max=20 
+            @on-change="onParamChange('buyNum', $event)"
+            ></vue-counter>
 	    		</div>
 	    	</div>
 	    	<div class="productType">
 	    		<span class="label"> 产品类型  : </span>
 	    		<div class="select-div">
-	    			<vue-selection :selections="productTypes"></vue-selection>
+	    			<vue-selection :selections="productTypes"
+             @on-change="onParamChange('buyType', $event)"
+            ></vue-selection>
 	    		</div>
 	    	</div>
 	    	<div class="time">
 	    		<span class="label">有效时间 : </span>
 	    		<div class="select-div">
-	    			<span class="label">一年</span>
+	    			 <vue-chooser :selections="times"
+             @on-change="onParamChange('period', $event)"
+             ></vue-chooser>
 	    		</div>
 	    	</div>
+        <div class="version">
+          <span class="label">产品版本 : </span>
+          <div class="select-div">
+             <multiply-chooser :selections="productionVersion"
+             @on-change="onParamChange('versions', $event)"
+             ></multiply-chooser>
+          </div>
+        </div>
 	    	<div class="all-price">
 	    		<span class="label">总价 : </span>
 	    		<div class="select-div">
-	    			<span class="label">500</span>
+	    			<span class="label">{{ price }}</span>
 	    		</div>
 	    	</div>
 	    	<div><button class="btn">立即购买</button></div>
@@ -46,11 +60,15 @@
 
 import VueSelection from '../../components/selection'
 import VueCounter from '../../components/counter'
+import MultiplyChooser from '../../components/multiply-chooser'
+import VueChooser from '../../components/chooser'
 export default {
   name: 'analysis',
   components:{
     VueSelection,
-    VueCounter
+    VueCounter,
+    MultiplyChooser,
+    VueChooser
   },
   data(){
   	return {
@@ -58,6 +76,7 @@ export default {
   		buyType:{},
   		versions:[],
   		period:{},
+      price:0,
   		productTypes:[
 	  		{
 	  			label:'入门版',
@@ -71,11 +90,65 @@ export default {
 	  			label:'高级版',
 	  			value:2
 	  		}
-  		]
+  		],
+      times:[
+        {
+          label:'半年',
+          value:0
+        },
+        {
+          label:'一年',
+          value:1
+        },
+        {
+          label:'三年',
+          value:2
+        }
+      ],
+      productionVersion:[
+        {
+          label:'客户版',
+          value:0
+        },
+        {
+          label:'代理商版',
+          value:1
+        },
+        {
+          label:'专家版',
+          value:2
+        }
+      ]
   	}
   },
   methods:{
-
+    onParamChange(attr , value){
+      this[attr] = value
+      this.getPrice ()
+    },
+    getPrice () {
+      let buyVersionArray = _.map(this.versions, (item) =>{
+        return item.value
+      })
+      let passParams = {
+        buyNumber: this.buyNum,
+        buyType:this.buyType.value,
+        period: this.period.value,
+        version:buyVersionArray.join(',')
+      }
+      this.$http.post('/api/getPrice', passParams)
+          .then((res)=>{
+            let data = res.data
+            this.price = data.amount
+          })
+    }
+  },
+  mounted(){
+    this.buyNum = 1
+    this.versions = [this.productionVersion[0]]
+    this.buyType = this.productTypes[0]
+    this.period = this.times[0]
+    this.getPrice()
   }
 }
 </script>

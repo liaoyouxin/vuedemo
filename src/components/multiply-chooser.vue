@@ -25,7 +25,7 @@
 		},
 		data(){
 			return{
-				nowIndexs:[]
+				nowIndexs:[0]
 			}
 		},
 		methods:{
@@ -37,7 +37,10 @@
 						return idx !== index
 					})
 				}
-				this.$emit('on-change',this.nowIndexs)
+			    let nowObjectArray = _.map(this.nowIndexs,(idx)=>{
+			       return this.selections[idx]
+			    })
+				this.$emit('on-change',nowObjectArray)
 			},
 			checkActive(index){
 				return this.nowIndexs.indexOf(index) === -1

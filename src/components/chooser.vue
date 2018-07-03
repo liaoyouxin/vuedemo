@@ -30,7 +30,7 @@
 		methods:{
 			chooseMe(index){
 				this.nowIndex = index
-				this.$emit('product-type',index)
+				this.$emit('on-change',this.selections[index])
 			}
 		}
 	}

@@ -25,5 +25,8 @@
     "login":{
     	"userName":"lyx",
     	"userId":"001"
+    },
+    "getPrice":{
+    	"amount":"678"
     }
 }
