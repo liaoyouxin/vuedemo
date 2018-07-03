@@ -2,7 +2,9 @@
   <div>
     <div class="app-head">
       <div class="app-head-inner">
+        <router-link :to="{path : '/'}">
           <img src="../assets/logo.png" alt="logo" class="app-head-logo">
+        </router-link>  
           <div class="head-nav">
             <ul class="nav-list">
               <li v-if="loginStatus">{{ userName }} &nbsp;</li>

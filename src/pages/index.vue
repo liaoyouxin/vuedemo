@@ -73,10 +73,10 @@ export default {
           title:'PC产品',
           last:false,
           list:[
-            { name:'数据统计',url:'http://starcraft.com',hot:true },
-            { name:'数据预测',url:'http://starcraft.com',hot:true },
-            { name:'流量分析',url:'http://starcraft.com' },
-            { name:'广告发布',url:'http://starcraft.com' }
+            { name:'数据统计',url:'/details/count',hot:true },
+            { name:'数据预测',url:'/details/forecast',hot:true },
+            { name:'流量分析',url:'/details/analysis' },
+            { name:'广告发布',url:'/details/publish' }
           ]
         },
         app:{
@@ -215,20 +215,20 @@ export default {
     text-indent: 160px;
   }
   .index-board-car .index-board-item-inner{
-    background: url(../assets/images/earth.png) no-repeat ;
-    background-size: 140px 140px;
+    background: url(../assets/images/car.png) no-repeat 20px ;
+    background-size: 110px 110px;
   }
   .index-board-loud .index-board-item-inner{
-    background: url(../assets/images/earth.png) no-repeat ;
-    background-size: 140px 140px;
+    background: url(../assets/images/loud.png) no-repeat 20px ;
+    background-size: 110px 110px;
   }
   .index-board-earth .index-board-item-inner{
-    background: url(../assets/images/earth.png) no-repeat ;
-    background-size: 140px 140px;
+    background: url(../assets/images/earth.png) no-repeat 20px;
+    background-size: 110px 110px;
   }
   .index-board-mounter .index-board-item-inner{
-    background: url(../assets/images/earth.png) no-repeat ;
-    background-size: 140px 140px;
+    background: url(../assets/images/mounter.png) no-repeat 20px;
+    background-size: 110px 110px;
   }
   .index-board-h{
     font-size: 16px;
