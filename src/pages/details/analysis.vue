@@ -42,7 +42,7 @@
 	    			<span class="label">{{ price }}</span>
 	    		</div>
 	    	</div>
-	    	<div><button class="btn">立即购买</button></div>
+	    	<div><button class="btn" @click="showPayDialog">立即购买</button></div>
 	    </div>
   	</div>
   	 <div class="product-description">
@@ -53,22 +53,59 @@
         	大数据预测是大数据最核心的应用，大数据预测将传统意义预测”拓展到“现测”。大数据预测的优势体现在它把一个非常困难的预测问题，转化为一个相对简单的描述问题，而这是传统小数据集根本无法企及的。
         </p>
       </div>
+      <pay-dialog :is-show="isShowPayDialog" @on-close="hidePayDialog">
+      	 <table class="buy-dialog-table">
+      	 	<tr>
+      	 		<th>购买数量</th>
+      	 		<th>产品类型</th>
+      	 		<th>有效时间</th>
+      	 		<th>产品版本</th>
+      	 		<th>总价</th>
+      	 	</tr>
+      	 	<tr>
+      	 		<td>{{ buyNum }}</td>
+      	 		<td>{{ buyType.label }}</td>
+      	 		<td>{{ period.label }}</td>
+      	 		<td>
+      	 			<span v-for="item in versions">
+      	 				{{ item.label }}
+      	 			</span>
+      	 		</td>
+      	 		<td>
+      	 			{{ price }}
+      	 		</td>
+      	 	</tr>
+      	 </table>
+      	 <h3 class="pay-title">请选择支付方式</h3>
+      	 <pay-chooser @on-change="showPayType"></pay-chooser>
+      	 <button class="btn" @click="sendPayData">确认购买</button>
+      </pay-dialog>
+      <check-dialog :is-show-check-dialog="showCheckDialog" 
+        :currentOrder="currentOrder"
+        @close-checkdialog="showCheckDialog = false"
+       ></check-dialog>
   </div>
 </template>
 
 <script>
 
-import VueSelection from '../../components/selection'
-import VueCounter from '../../components/counter'
-import MultiplyChooser from '../../components/multiply-chooser'
-import VueChooser from '../../components/chooser'
+import VueSelection from '../../components/base/selection'
+import VueCounter from '../../components/base/counter'
+import MultiplyChooser from '../../components/base/multiply-chooser'
+import VueChooser from '../../components/base/chooser'
+import PayDialog from '../../components/base/vueDialog'
+import PayChooser from '../../components/base/pay-chooser'
+import CheckDialog from '../../components/base/checkOrder'
 export default {
   name: 'analysis',
   components:{
     VueSelection,
     VueCounter,
     MultiplyChooser,
-    VueChooser
+    VueChooser,
+    PayDialog,
+    PayChooser,
+    CheckDialog
   },
   data(){
   	return {
@@ -76,7 +113,11 @@ export default {
   		buyType:{},
   		versions:[],
   		period:{},
-      price:0,
+        price:0,
+        payType:0,
+        currentOrder:null,
+        isShowPayDialog:false,
+        showCheckDialog:false,
   		productTypes:[
 	  		{
 	  			label:'入门版',
@@ -141,6 +182,35 @@ export default {
             let data = res.data
             this.price = data.amount
           })
+    },
+    showPayDialog(){
+    	this.isShowPayDialog = true
+    },
+    hidePayDialog(){
+    	this.isShowPayDialog = false
+    },
+    showPayType(value){
+    	this.payType = value 
+    },
+    sendPayData(){
+    	let buyVersionArray = _.map(this.versions, (item) =>{
+    		return item.value
+    	})
+
+    	let passParams = {
+    		buyNumber : this.buyNum,
+    		buyType : this.buyType.value,
+    		version : buyVersionArray.join(','),
+    		period : this.period.value,
+    		payType : this.payType
+    	}
+
+    	this.$http.post('/api/createOrder',passParams)
+    	    .then((res)=>{
+    	    	this.currentOrder = res.data.orderId
+    	    	this.showCheckDialog = true
+    	    	this.isShowPayDialog = false
+    	    })
     }
   },
   mounted(){
@@ -199,5 +269,24 @@ export default {
    }
    .productdes{
    line-height:1.6
+   }
+     .buy-dialog-table{
+    width: 100%;
+    margin-bottom: 20px;
+   }
+   .buy-dialog-table td,
+   .buy-dialog-table th{
+    border: 1px solid #e3e3e3;
+    text-align: center;
+    padding:5px 0;
+   }
+   .buy-dialog-table th{
+    background: #4fc08d;
+    color: #fff;
+    border: 1px solid #4fc08d
+   }
+   .pay-title{
+   	font-size: 16px;
+   	font-weight:bold;
    }
 </style>

@@ -1,10 +1,10 @@
 <template>
 	<div class="selection-componet">
-		<div class="selection-show" @click="isDrop = !isDrop">
+		<div :class="[{'selection-show':!color},{'color':color}]" @click="isDrop = !isDrop">
 			<span>{{ selections[nowIndex].label }}</span>
 			<div class="arrow"></div>
 		</div>
-		<div class="selection-list" v-if="isDrop">
+		<div :class="[{'selection-list':true},{'selection-list-color':color}]" v-if="isDrop">
 			<ul>
 				<li v-for="(item, index) in selections"
 				    @click="chooseSelection(index)"
@@ -26,6 +26,10 @@
 					label:'test',
 					value:0
 				}]
+			},
+			color:{
+				type:Boolean,
+				default:false
 			}
 		},
 		data(){
@@ -59,7 +63,17 @@
     	cursor: pointer;
     	line-height: 25px;
     }
-    .selection-show .arrow{
+    .color{
+    	padding:4px 25px 4px 15px;
+    	display: inline-block;
+    	background: #fff;
+    	border: 1px solid #ccc;
+    	border-radius: 3px;
+    	position: relative;
+    	cursor: pointer;
+    	line-height: 25px;
+    }
+     .arrow{
     	display: inline-block;
     	border-left: 4px solid transparent;
     	border-right: 4px solid transparent;
@@ -81,6 +95,9 @@
 		border-top: 1px solid #e3e3e3;
 		border-bottom: 1px solid #e3e3e3;
 		z-index: 5
+	}
+	.selection-list-color{
+		top: 38px;
 	}
 	.selection-list li{
 	  padding: 5px;

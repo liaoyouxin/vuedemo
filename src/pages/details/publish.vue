@@ -51,9 +51,9 @@
 </template>
 
 <script>
-import MultiplyChooser from '../../components/multiply-chooser'
-import VueCounter from '../../components/counter'
-import VueSelection from '../../components/selection'
+import MultiplyChooser from '../../components/base/multiply-chooser'
+import VueCounter from '../../components/base/counter'
+import VueSelection from '../../components/base/selection'
 
 export default {
   name: 'publish',

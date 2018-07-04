@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import slideShow from '@/components/slide'
+import slideShow from '@/components/base/slide'
 
 export default {
   name: 'index',

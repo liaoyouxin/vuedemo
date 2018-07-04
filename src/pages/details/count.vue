@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import chooser from '@/components/chooser'
-import VueSelection from '@/components/selection'
+import chooser from '../../components/base/chooser'
+import VueSelection from '../../components/base/selection'
 
 export default {
   name: 'count',

@@ -17,8 +17,10 @@
     "loadsh": "^1.0.1",
     "proxytable": "^1.0.1",
     "vue": "^2.5.2",
+    "vue-calendar-picker": "^2.0.3",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
+    "vue2-datepicker": "^2.0.3",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-<template>
+base/<template>
   <div class="forecast-wrap">
       <div class="selection">
       	<h2 class="title">数据预测</h2>
@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import MultiplyChooser from '../../components/multiply-chooser'
-import VueCounter from '../../components/counter'
+import MultiplyChooser from '../../components/base/multiply-chooser'
+import VueCounter from '../../components/base/counter'
 
 export default {
   name: 'forecast',

@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import VueDialog from './vueDialog'
+import VueDialog from './base/vueDialog'
 import LogForm from './logForm'
 
 export default {
@@ -176,6 +176,9 @@ a {
   height: 60px;
   line-height: 60px;
   width: 100%;
+}
+.app-content{
+  min-height: 600px;
 }
 .app-head-inner{
   width: 1200px;

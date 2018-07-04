@@ -3,8 +3,8 @@
       <div class="details-left">
          <img :src="productIcon" class="details-logo">
          <ul class="details-nav">
-           <router-link v-for="item in productTypeList"
-               :to="{ path: item.path }" tag="li"
+           <router-link v-for="(item,index) in productTypeList"
+               :to="{ path: item.path }" :key="index" tag="li"
                active-class="active"> 
               {{ item.name }}
            </router-link>
@@ -21,7 +21,7 @@
 <script>
 
 export default {
-  name: 'details',
+  name: 'detail',
   components:{
     
   },
@@ -110,5 +110,20 @@ export default {
    .details-right{
     width: 850px;
     margin-left: 40px;
+   }
+     .buy-dialog-table{
+    width: 100%;
+    margin-bottom: 20px;
+   }
+   .buy-dialog-table td,
+   .buy-dialog-table th{
+    border: 1px solid #e3e3e3;
+    text-align: center;
+    padding:5px 0;
+   }
+   .buy-dialog-table th{
+    background: #4fc08d;
+    color: #fff;
+    border: 1px solid #4fc08d
    }
 </style>
